@@ -94,7 +94,7 @@ export class ConfigFormComponent implements OnInit, OnDestroy {
     {
       type: "tabs",
       tabs: [
-        {
+        { 
           title: "General",
           items: [
                     'language',
@@ -113,7 +113,7 @@ export class ConfigFormComponent implements OnInit, OnDestroy {
               "maxRetryCount",
               "orderStatusCheckInterval",
                   ]
-                },
+        },
         {
           title: "stabilityTracker",
           items: [
@@ -149,7 +149,7 @@ export class ConfigFormComponent implements OnInit, OnDestroy {
         {
           title: "Brokers",
           type: "array",
-          key : 'brokers',
+
           startEmpty: false,
           items : [
             "brokers[].broker",
@@ -177,8 +177,10 @@ export class ConfigFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.wsService.connect();
     this.subscription = this.wsService.config$.subscribe(config => {
-      this.exampleData = config;
+      //this.exampleData = config;
+      this.exampleData = {"language":"en","demoMode":true,"symbol":"BTC/JPY","priceMergeSize":100,"maxSize":0.01,"minSize":0.01,"minTargetProfitPercent":1,"exitNetProfitRatio":20,"maxTargetVolumePercent":50,"iterationInterval":3000,"positionRefreshInterval":5000,"sleepAfterSend":5000,"maxNetExposure":0.1,"maxRetryCount":10,"orderStatusCheckInterval":3000,"stabilityTracker":{"threshold":8,"recoveryInterval":300000},"onSingleLeg":{"action":"Reverse","actionOnExit":"Proceed","options":{"limitMovePercent":5,"ttl":3000}},"analytics":{"enabled":false,"plugin":"SimpleSpreadStatHandler.js","initialHistory":{"minutes":30}},"webGateway":{"enabled":true,"host":"127.0.0.1","openBrowser":true},"brokers":[{"broker":"Coincheck","enabled":true,"maxLongPosition":0.15,"maxShortPosition":0.15,"cashMarginType":"NetOut","commissionPercent":0},{"broker":"Bitflyer","enabled":true,"maxLongPosition":0.03,"maxShortPosition":0,"cashMarginType":"Cash","commissionPercent":0,"noTradePeriods":[["04:00","04:15"]]},{"broker":"Quoine","enabled":true,"maxLongPosition":0.15,"maxShortPosition":0.15,"cashMarginType":"NetOut","leverageLevel":10,"commissionPercent":0},{"broker":"Bitbankcc","npmPath":"@bitr/bitbankcc","enabled":true,"maxLongPosition":0.03,"maxShortPosition":0,"cashMarginType":"Cash","commissionPercent":0},{"broker":"Btcbox","npmPath":"@bitr/btcbox","enabled":true,"maxLongPosition":0.03,"maxShortPosition":0,"cashMarginType":"Cash","commissionPercent":0}]};
       this.config =  JSON.stringify(config, null, 2);
+      this.subscription.unsubscribe();
     });
   }
 

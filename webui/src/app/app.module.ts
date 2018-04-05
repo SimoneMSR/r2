@@ -21,7 +21,7 @@ import { DepthService } from './depth.service';
 import {
   JsonSchemaFormModule,  
   FrameworkLibraryService, WidgetLibraryModule, WidgetLibraryService,
-  JsonSchemaFormService, Framework, NoFramework
+  JsonSchemaFormService, Framework, Bootstrap4FrameworkModule, Bootstrap4Framework
 } from 'angular2-json-schema-form';
 
 @NgModule({
@@ -40,12 +40,13 @@ import {
     LoadingComponent
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule,
+  Bootstrap4FrameworkModule ,
   {
     ngModule : JsonSchemaFormModule,
     providers: [FrameworkLibraryService, 
     WidgetLibraryService, 
     JsonSchemaFormService,
-    {provide: Framework, useClass: NoFramework, multi: true}]
+    {provide: Framework, useClass: Bootstrap4Framework, multi: true}]
   }, WidgetLibraryModule],
   providers: [WsService, LogService, DepthService],
   bootstrap: [AppComponent]
