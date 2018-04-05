@@ -5,11 +5,9 @@
 	      <json-schema-form
 			    [schema]="exampleSchema"
 			    [data]="exampleData"
+			    [layout]="form"
 			    (onSubmit)="exampleOnSubmitFn($event)">
 			  </json-schema-form>
-			  <h4>Submitted data:</h4>
-			  <pre *ngIf="!displayData">(none)</pre>
-			  <pre *ngIf="displayData">{{displayData | json}}</pre>
 	    </div>
   </div>
   <div>

@@ -260,3 +260,11 @@ div.depth-body .best:not(.untradable) {
 .header-control input {
   vertical-align: middle;
 }
+
+.json-editor.content {
+  min-height: inherit;
+}
+
+.json-editor input,  .json-editor select{
+  color : black;
+}

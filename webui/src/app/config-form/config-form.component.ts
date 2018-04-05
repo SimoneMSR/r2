@@ -15,61 +15,161 @@ export class ConfigFormComponent implements OnInit, OnDestroy {
   exampleSchema = {
     'type': 'object',
     'properties': {
-      'first_name': { 'type': 'string' },
-      'last_name': { 'type': 'string' },
-      'age': { 'type': 'integer' },
-      'is_company': { 'type': 'boolean' },
-      'address': {
+      'language': { 'type': 'string', 'enum': [ 'en', 'other' ]  },
+      'demoMode': { 'type': 'boolean' },
+      'symbol': { 'type': 'string' },
+      'priceMergeSize': { 'type': 'number' },
+      'maxSize': { 'type': 'number' },
+      'minSize': { 'type': 'number' },
+      'minTargetProfitPercent': { 'type': 'number' },
+      "exitNetProfitRatio": { 'type': 'number' },
+      "maxTargetVolumePercent": { 'type': 'number' },
+      "iterationInterval": { 'type': 'number' },
+      "positionRefreshInterval": { 'type': 'number' },
+      "sleepAfterSend": { 'type': 'number' },
+      "maxNetExposure": { 'type': 'number' },
+      "maxRetryCount": { 'type': 'number' },
+      "orderStatusCheckInterval": { 'type': 'number' },
+      'stabilityTracker': {
         'type': 'object',
         'properties': {
-          'street_1': { 'type': 'string' },
-          'street_2': { 'type': 'string' },
-          'city': { 'type': 'string' },
-          'state': {
-            'type': 'string',
-            'enum': [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE',
-                'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA',
-                'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS',
-                'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND',
-                'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD',
-                'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ]
-          },
-          'zip_code': { 'type': 'string' }
+          'threshold': { 'type': 'number' },
+          'recoveryInterval': { 'type': 'number' }
         }
       },
-      'birthday': { 'type': 'string' },
-      'notes': { 'type': 'string' },
-      'phone_numbers': {
-        'type': 'array',
-        'items': {
-          'type': 'object',
-          'properties': {
-            'type': { 'type': 'string', 'enum': [ 'cell', 'home', 'work' ] },
-            'number': { 'type': 'string' }
-          },
-          'required': [ 'type', 'number' ]
+      'onSingleLeg': {
+        'type': 'object',
+        'properties': {
+          'action': { 'type': 'string', 'enum': [ 'Reverse', 'other' ]  },
+          'actionOnExit': { 'type': 'string' , 'enum': [ 'Proceed', 'other' ]},
+          'options' : {
+            'type' : 'object',
+            'properties' : {
+                   "limitMovePercent": { 'type': 'number' },
+                  "ttl": { 'type': 'number' }
+            }
+          }
         }
-      }
+      },
+      'analytics': {
+        'type': 'object',
+        'properties': {
+          'enabled': { 'type': 'boolean'  },
+          'plugin': { 'type': 'string'},
+          'initialHistory' : {
+            'type' : 'object',
+            'properties' : {
+                   "minutes": { 'type': 'number' }
+            }
+          }
+        }
+      },
+      'webGateway': {
+        'type': 'object',
+        'properties': {
+          'enabled': { 'type': 'boolean'  },
+          'host': { 'type': 'string'},
+          'openBrowser': { 'type': 'boolean'  },
+        }
+      },
+      'brokers': { 
+        'type': 'array',
+        'items' : {
+          'type' : 'object',
+          'properties' : {
+            "broker": { 'type': 'string' },
+            "enabled": { 'type': 'boolean'  },
+            "maxLongPosition": { 'type': 'number' },
+            "maxShortPosition": { 'type': 'number' },
+            "cashMarginType": { 'type': 'string' },
+            "commissionPercent": { 'type': 'number' }
+          }
+        }
+       }
     },
-    'required': [ 'last_name' ]
+    'required': [ 'language' ]
   };
 
-  exampleData = {
-    'first_name': 'Jane', 'last_name': 'Doe', 'age': 25, 'is_company': false,
-    'address': {
-      'street_1': '123 Main St.', 'street_2': null,
-      'city': 'Las Vegas', 'state': 'NV', 'zip_code': '89123'
-    },
-    'phone_numbers': [
-      { 'number': '702-123-4567', 'type': 'cell' },
-      { 'number': '702-987-6543', 'type': 'work' }
-    ], 'notes': ''
-  };
+  form = [
+    {
+      type: "tabs",
+      tabs: [
+        {
+          title: "General",
+          items: [
+                    'language',
+              'demoMode',
+              'symbol',
+              'priceMergeSize',
+              'maxSize',
+              'minSize',
+              'minTargetProfitPercent',
+              "exitNetProfitRatio",
+              "maxTargetVolumePercent",
+              "iterationInterval",
+              "positionRefreshInterval",
+              "sleepAfterSend",
+              "maxNetExposure",
+              "maxRetryCount",
+              "orderStatusCheckInterval",
+                  ]
+                },
+        {
+          title: "stabilityTracker",
+          items: [
+            "stabilityTracker.threshold",
+            "stabilityTracker.recoveryInterval"
+          ]
+        },
+        {
+          title : "onSingleLeg",
+          items: [
+            "onSingleLeg.action",
+            "onSingleLeg.actionOnExit",
+            "onSingleLeg.options.limitMovePercent", 
+            "onSingleLeg.options.ttl"
+    ]
+        },
+                {
+          title : "analytics",
+          items: [
+            "analytics.enabled",
+            "analytics.plugin",
+            "analytics.initialHistory.minutes", 
+           ]
+        },
+                {
+          title : "webGateway",
+          items: [
+              "webGateway.enabled",
+                "webGateway.host",
+                "webGateway.openBrowser"
+          ]
+        },
+        {
+          title: "Brokers",
+          type: "array",
+          key : 'brokers',
+          startEmpty: false,
+          items : [
+            "brokers[].broker",
+             "brokers[].enabled",
+              "brokers[].maxLongPosition",
+               "brokers[].maxShortPosition",
+                "brokers[].cashMarginType",
+                 "brokers[].commissionPercent",
+          ]
+        }
+      ]
+    }
+  ];
+
+  exampleData = {};
 
   displayData: any = null;
 
   exampleOnSubmitFn(formData) {
-    this.displayData = formData;
+    this.config =  JSON.stringify(formData, null, 2);
   }
 
   constructor(private readonly wsService: WsService) {}
@@ -77,7 +177,8 @@ export class ConfigFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.wsService.connect();
     this.subscription = this.wsService.config$.subscribe(config => {
-      this.config = JSON.stringify(config, null, 2);
+      this.exampleData = config;
+      this.config =  JSON.stringify(config, null, 2);
     });
   }
 
