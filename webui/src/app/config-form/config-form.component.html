@@ -1,5 +1,17 @@
 <div class="container">
-
+  <div class ="json-editor">
+  	<header class='section-header'>Editor</header>
+	    <div class="content">
+	      <json-schema-form
+			    [schema]="exampleSchema"
+			    [data]="exampleData"
+			    (onSubmit)="exampleOnSubmitFn($event)">
+			  </json-schema-form>
+			  <h4>Submitted data:</h4>
+			  <pre *ngIf="!displayData">(none)</pre>
+			  <pre *ngIf="displayData">{{displayData | json}}</pre>
+	    </div>
+  </div>
   <div>
     <header class='section-header'>Config</header>
     <div class="content">
@@ -7,6 +19,7 @@
         Loading...
       </div>
       <pre *ngIf="config">{{config}}</pre>
+
     </div>
   </div>
 </div>

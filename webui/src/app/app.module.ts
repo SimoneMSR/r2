@@ -18,6 +18,11 @@ import { ActivePairComponent } from './main-view/active-pair/active-pair.compone
 import { LogService } from './log.service';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { DepthService } from './depth.service';
+import {
+  JsonSchemaFormModule,  
+  FrameworkLibraryService, WidgetLibraryModule, WidgetLibraryService,
+  JsonSchemaFormService, Framework, NoFramework
+} from 'angular2-json-schema-form';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,14 @@ import { DepthService } from './depth.service';
     ActivePairComponent,
     LoadingComponent
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule,
+  {
+    ngModule : JsonSchemaFormModule,
+    providers: [FrameworkLibraryService, 
+    WidgetLibraryService, 
+    JsonSchemaFormService,
+    {provide: Framework, useClass: NoFramework, multi: true}]
+  }, WidgetLibraryModule],
   providers: [WsService, LogService, DepthService],
   bootstrap: [AppComponent]
 })
